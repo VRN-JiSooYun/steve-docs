@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Molstar Interaction Kinds</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f4ef;
+    --text-primary: #1a1a18;
+    --text-secondary: #5a5a56;
+    --text-tertiary: #9a9a94;
+    --border: rgba(0,0,0,0.1);
+    --radius-lg: 12px;
+    --radius-md: 8px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-primary: #1c1c1a;
+      --bg-secondary: #242420;
+      --text-primary: #e8e6de;
+      --text-secondary: #9a9890;
+      --text-tertiary: #5a5a56;
+      --border: rgba(255,255,255,0.08);
+    }
+  }
+
+  body {
+    font-family: 'Georgia', serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    padding: 40px 24px 60px;
+    max-width: 860px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  header {
+    margin-bottom: 36px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
+  }
+
+  header h1 {
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -0.3px;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+
+  header p {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    font-style: italic;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .card {
+    background: var(--bg-secondary);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px 18px;
+  }
+
+  .card-full { grid-column: 1 / -1; }
+
+  .badge {
+    display: inline-block;
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+
+  .b-blue   { background: #E6F1FB; color: #0C447C; }
+  .b-teal   { background: #E1F5EE; color: #085041; }
+  .b-amber  { background: #FAEEDA; color: #633806; }
+  .b-coral  { background: #FAECE7; color: #4A1B0C; }
+  .b-purple { background: #EEEDFE; color: #26215C; }
+  .b-green  { background: #EAF3DE; color: #173404; }
+  .b-pink   { background: #FBEAF0; color: #4B1528; }
+  .b-gray   { background: #F1EFE8; color: #2C2C2A; }
+
+  @media (prefers-color-scheme: dark) {
+    .b-blue   { background: #0C447C; color: #B5D4F4; }
+    .b-teal   { background: #085041; color: #9FE1CB; }
+    .b-amber  { background: #633806; color: #FAC775; }
+    .b-coral  { background: #4A1B0C; color: #F5C4B3; }
+    .b-purple { background: #26215C; color: #CECBF6; }
+    .b-green  { background: #173404; color: #C0DD97; }
+    .b-pink   { background: #4B1528; color: #F4C0D1; }
+    .b-gray   { background: #2C2C2A; color: #D3D1C7; }
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 500;
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    color: var(--text-primary);
+    margin: 0 0 8px;
+  }
+
+  .row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin: 4px 0;
+  }
+
+  .label {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    min-width: 90px;
+    flex-shrink: 0;
+  }
+
+  .val {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 12px;
+    color: var(--text-primary);
+  }
+
+  hr.divider {
+    border: none;
+    border-top: 0.5px solid var(--border);
+    margin: 10px 0;
+  }
+
+  .note {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  .card-full .inner-grid {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .card-full .inner-grid > div {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .card-full p {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  code {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    background: var(--border);
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+
+  footer {
+    margin-top: 36px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 11px;
+    color: var(--text-tertiary);
+  }
+
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr; }
+    .card-full { grid-column: 1; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Molstar — Interaction Kind 판단 기준</h1>
+  <p>non-covalent interaction 계산 규칙 요약</p>
+</header>
+
+<div class="grid">
+
+  <div class="card">
+    <span class="badge b-blue">ionic</span>
+    <h3>이온 상호작용</h3>
+    <div class="row"><span class="label">최대 거리</span><span class="val">5.0 Å</span></div>
+    <hr class="divider">
+    <div class="row"><span class="label">양전하 쪽</span><span class="val">ARG/HIS/LYS의 N, guanidine, quaternary amine 등 (formal charge &gt; 0)</span></div>
+    <div class="row"><span class="label">음전하 쪽</span><span class="val">ASP/GLU의 O, phosphate/sulfate/carboxylate O 등 (formal charge &lt; 0)</span></div>
+    <p class="note">두 feature의 원자 중 어느 한 쌍이라도 5.0 Å 이내면 성립</p>
+  </div>
+
+  <div class="card">
+    <span class="badge b-teal">hydrogen-bond</span>
+    <h3>수소결합</h3>
+    <div class="row"><span class="label">최대 거리</span><span class="val">3.5 Å (S 포함 시 4.1 Å)</span></div>
+    <hr class="divider">
+    <div class="row"><span class="label">donor</span><span class="val">H를 가진 N/O/S, histidine ring N</span></div>
+    <div class="row"><span class="label">acceptor</span><span class="val">대부분의 O, lone pair 가능한 중성 N, CYS/MET의 S 또는 formal charge -1인 S</span></div>
+    <div class="row"><span class="label">각도 허용</span><span class="val">donor/acceptor 모두 ideal 대비 ±45°</span></div>
+    <p class="note">water–water 제외 / backbone–backbone 포함</p>
+  </div>
+
+  <div class="card">
+    <span class="badge b-amber">pi-stacking</span>
+    <h3>파이 스태킹</h3>
+    <div class="row"><span class="label">중심 거리</span><span class="val">최대 5.5 Å</span></div>
+    <div class="row"><span class="label">lateral offset</span><span class="val">최대 2.0 Å</span></div>
+    <hr class="divider">
+    <div class="row"><span class="label">평행/역평행</span><span class="val">두 ring normal 각도 ≤ 30° 또는 ≥ 150°</span></div>
+    <div class="row"><span class="label">T-shaped</span><span class="val">각도 60°–120° (90° ± 30°)</span></div>
+    <p class="note">aromatic ring feature끼리만 검사</p>
+  </div>
+
+  <div class="card">
+    <span class="badge b-amber">cation-π</span>
+    <h3>양이온–파이 상호작용</h3>
+    <div class="row"><span class="label">최대 거리</span><span class="val">6.0 Å</span></div>
+    <div class="row"><span class="label">projected offset</span><span class="val">aromatic plane 기준 최대 2.0 Å</span></div>
+    <hr class="divider">
+    <p class="note">별도 각도 조건 없음. aromatic ring feature ↔ positive charge feature 쌍만 검사</p>
+  </div>
+
+  <div class="card">
+    <span class="badge b-coral">halogen-bond</span>
+    <h3>할로겐 결합</h3>
+    <div class="row"><span class="label">최대 거리</span><span class="val">4.0 Å</span></div>
+    <div class="row"><span class="label">허용 donor</span><span class="val">Cl / Br / I / At (F 제외)</span></div>
+    <hr class="divider">
+    <div class="row"><span class="label">donor 각도</span><span class="val">180° ± 30°</span></div>
+    <div class="row"><span class="label">acceptor 각도</span><span class="val">120° ± 30°</span></div>
+    <div class="row"><span class="label">acceptor 원자</span><span class="val">N/O/S이며 C/N/P/S에 결합된 것</span></div>
+    <p class="note">donor는 단일 결합된 할로겐이어야 함</p>
+  </div>
+
+  <div class="card">
+    <span class="badge b-teal">weak-hydrogen-bond</span>
+    <h3>약한 수소결합</h3>
+    <div class="row"><span class="label">최대 거리</span><span class="val">3.5 Å</span></div>
+    <div class="row"><span class="label">weak donor</span><span class="val">C–H (탄소가 N·O에 결합되었거나 N/O 포함 aromatic ring 내)</span></div>
+    <hr class="divider">
+    <div class="row"><span class="label">각도 조건</span><span class="val">일반 수소결합과 동일</span></div>
+    <p class="note">같은 acceptor에 이미 strong H-bond가 있으면 필터링됨</p>
+  </div>
+
+  <div class="card">
+    <span class="badge b-green">hydrophobic</span>
+    <h3>소수성 접촉</h3>
+    <div class="row"><span class="label">최대 거리</span><span class="val">4.0 Å</span></div>
+    <hr class="divider">
+    <div class="row"><span class="label">해당 원자</span><span class="val">결합 상대가 C/H뿐인 탄소, 또는 F (단, F–F 쌍 제외)</span></div>
+    <p class="note">같은 residue 쌍 내 여러 접촉 → 가장 가까운 것만 유지. pi-stacking이 있으면 필터링될 수 있음</p>
+  </div>
+
+  <div class="card">
+    <span class="badge b-purple">metal-coordination</span>
+    <h3>금속 배위</h3>
+    <div class="row"><span class="label">최대 거리</span><span class="val">3.0 Å</span></div>
+    <hr class="divider">
+    <div class="row"><span class="label">ionic-type</span><span class="val">Li Na K Rb Cs Mg Ca Sr Ba Al Ga In Tl Sc Sn Pb Bi Sb Hg</span></div>
+    <div class="row"><span class="label">transition</span><span class="val">전이금속 + Zn, Cd</span></div>
+    <div class="row"><span class="label">partner 예</span><span class="val">backbone O, ASP/GLU/SER의 O, CYS/MET의 S, HIS의 N 등</span></div>
+    <p class="note">metal coordination이 있으면 ionic interaction은 필터링됨</p>
+  </div>
+
+  <div class="card card-full">
+    <div class="inner-grid">
+      <div>
+        <span class="badge b-pink">covalent</span>
+        <h3>공유결합</h3>
+        <p>non-covalent interaction 계산 결과가 아닙니다. mmCIF의 <code>struct_conn</code> / <code>chem_comp_bond</code> 정보에서 옵니다. <code>value_order</code>가 sing/doub/trip/quad/arom이면 각각 1/2/3/4/aromatic으로 해석, <code>type_id</code>가 covale/disulf이면 covalent flag가 붙습니다.</p>
+      </div>
+      <div>
+        <span class="badge b-gray">unknown</span>
+        <h3>알 수 없는 유형</h3>
+        <p><code>InteractionTypeToKind</code>에 매핑되지 않는 타입의 fallback 값입니다. 별도 계산 규칙 없음.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  거리 기준 요약 (짧은 순): metal-coord 3.0 Å → halogen-bond / hydrophobic 4.0 Å → ionic 5.0 Å → pi-stacking 5.5 Å → cation-π 6.0 Å
+</footer>
+
+</body>
+</html>
